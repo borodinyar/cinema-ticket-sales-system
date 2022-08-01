@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://cinemaHallBrowse.caption"
+        focusComponent="cinemaHallsTable">
+    <data readOnly="true">
+        <collection id="cinemaHallsDc"
+                    class="com.company.tickets.entity.CinemaHall">
+            <fetchPlan extends="_base"/>
+            <loader id="cinemaHallsDl">
+                <query>
+                    <![CDATA[select e from CinemaHall e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="cinemaHallsTable" spacing="true">
+        <filter id="filter"
+                dataLoader="cinemaHallsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="cinemaHallsTable"
+                    width="100%"
+                    dataContainer="cinemaHallsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="cinemaHallsTable.create"/>
+                <button id="editBtn" action="cinemaHallsTable.edit"/>
+                <button id="removeBtn" action="cinemaHallsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

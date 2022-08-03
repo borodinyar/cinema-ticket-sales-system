@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://cinemaHallBrowse.caption"
-        focusComponent="cinemaHallsTable">
+        caption="msg://seatBrowse.caption"
+        focusComponent="seatsTable">
     <data readOnly="true">
-        <collection id="cinemaHallsDc"
-                    class="com.company.tickets.entity.CinemaHall">
-            <fetchPlan extends="_base"/>
-            <loader id="cinemaHallsDl">
+        <collection id="seatsDc"
+                    class="com.company.tickets.entity.Seat">
+            <fetchPlan extends="_base">
+                <property name="cinemaHall" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="seatsDl">
                 <query>
-                    <![CDATA[select e from CinemaHall e]]>
+                    <![CDATA[select e from Seat e]]>
                 </query>
             </loader>
         </collection>
@@ -30,31 +32,31 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="cinemaHallsTable" spacing="true">
+    <layout expand="seatsTable" spacing="true">
         <filter id="filter"
-                dataLoader="cinemaHallsDl">
+                dataLoader="seatsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="cinemaHallsTable"
+        <groupTable id="seatsTable"
                     width="100%"
-                    dataContainer="cinemaHallsDc">
+                    dataContainer="seatsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="name"/>
-                <column id="description"/>
-                <column id="numberOfRows"/>
-                <column id="numberOfSeats"/>
+                <column id="cinemaHall"/>
+                <column id="rowNumber"/>
+                <column id="numberInRow"/>
+                <column id="price"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="cinemaHallsTable.create"/>
-                <button id="editBtn" action="cinemaHallsTable.edit"/>
-                <button id="removeBtn" action="cinemaHallsTable.remove"/>
+                <button id="createBtn" action="seatsTable.create"/>
+                <button id="editBtn" action="seatsTable.edit"/>
+                <button id="removeBtn" action="seatsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

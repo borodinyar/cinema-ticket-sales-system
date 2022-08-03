@@ -18,20 +18,44 @@ public class CinemaHall {
     @Id
     private UUID id;
 
+    @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull
     private String name;
 
-    @InstanceName
     @Column(name = "DESCRIPTION", nullable = false)
     @NotNull
     private String description;
+
+    @Column(name = "NUMBER_OF_ROWS", nullable = false)
+    @NotNull
+    private Integer numberOfRows;
+
+    @Column(name = "NUMBER_OF_SEATS", nullable = false)
+    @NotNull
+    private Integer numberOfSeats;
 
     @OneToMany(mappedBy = "cinemaHall")
     private List<Session> session;
 
     @OneToMany(mappedBy = "cinemaHall")
     private List<Seat> seat;
+
+    public Integer getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(Integer numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public Integer getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    public void setNumberOfRows(Integer numberOfRows) {
+        this.numberOfRows = numberOfRows;
+    }
 
     public List<Seat> getSeat() {
         return seat;

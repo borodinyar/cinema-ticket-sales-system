@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://cinemaHallBrowse.caption"
-        focusComponent="cinemaHallsTable">
+        caption="msg://filmBrowse.caption"
+        focusComponent="filmsTable">
     <data readOnly="true">
-        <collection id="cinemaHallsDc"
-                    class="com.company.tickets.entity.CinemaHall">
+        <collection id="filmsDc"
+                    class="com.company.tickets.entity.Film">
             <fetchPlan extends="_base"/>
-            <loader id="cinemaHallsDl">
+            <loader id="filmsDl">
                 <query>
-                    <![CDATA[select e from CinemaHall e]]>
+                    <![CDATA[select e from Film e]]>
                 </query>
             </loader>
         </collection>
@@ -30,14 +30,14 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="cinemaHallsTable" spacing="true">
+    <layout expand="filmsTable" spacing="true">
         <filter id="filter"
-                dataLoader="cinemaHallsDl">
+                dataLoader="filmsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="cinemaHallsTable"
+        <groupTable id="filmsTable"
                     width="100%"
-                    dataContainer="cinemaHallsDc">
+                    dataContainer="filmsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -46,15 +46,14 @@
             <columns>
                 <column id="name"/>
                 <column id="description"/>
-                <column id="numberOfRows"/>
-                <column id="numberOfSeats"/>
+                <column id="duration"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="cinemaHallsTable.create"/>
-                <button id="editBtn" action="cinemaHallsTable.edit"/>
-                <button id="removeBtn" action="cinemaHallsTable.remove"/>
+                <button id="createBtn" action="filmsTable.create"/>
+                <button id="editBtn" action="filmsTable.edit"/>
+                <button id="removeBtn" action="filmsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

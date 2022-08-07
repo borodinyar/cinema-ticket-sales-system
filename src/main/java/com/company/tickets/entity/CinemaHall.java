@@ -7,8 +7,6 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,7 +41,8 @@ public class CinemaHall {
     @OneToMany(mappedBy = "cinemaHall")
     private List<Session> session;
 
-    @OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.PERSIST)
+
+    @OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.ALL)
     private List<Seat> seat;
 
     public Integer getNumberOfSeats() {
@@ -100,5 +99,20 @@ public class CinemaHall {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Name hall: " + this.getName() + "\n");
+        stringBuilder.append("Description: " + this.getDescription() + "\n");
+        stringBuilder.append("Number of rows and seats: " + this.getNumberOfRows() + ", " + this.getNumberOfSeats() + "\n");
+        stringBuilder.append("Seats: \n");
+
+        List<Seat> seats = this.getSeat();
+        for(Seat seat : seats) {
+            stringBuilder.append(seat.toString());
+        }
+        return stringBuilder.toString();
     }
 }

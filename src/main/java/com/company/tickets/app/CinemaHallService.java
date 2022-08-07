@@ -18,19 +18,11 @@ public class CinemaHallService {
     @Autowired
     private DataManager dataManager;
 
-    public void createSeats(CinemaHall cinemaHall) {
-        SaveContext saveContext = new SaveContext().setDiscardSaved(true);
-        saveContext.saving(cinemaHall, createSeatEntities(cinemaHall));
-        dataManager.save(saveContext);
-
-
-//        int numberOfRows = cinemaHall.getNumberOfRows();
-//        int numberOfSeats = cinemaHall.getNumberOfSeats();
-//        for (int row = 1; row <= numberOfRows; row++) {
-//            for (int seat = 1; seat <= numberOfSeats; seat++) {
-
-//            }
-//        }
+    public List<Seat> createSeats(CinemaHall cinemaHall) {
+        SaveContext saveContext = new SaveContext();
+        List<Seat> seats = createSeatEntities(cinemaHall);
+        saveContext.saving(seats);
+        return seats;
     }
 
     private List<Seat> createSeatEntities(CinemaHall cinemaHall) {
@@ -46,7 +38,7 @@ public class CinemaHallService {
                 .collect(Collectors.toList());
     }
 
-    private Seat createSeat(int row, int seatNumber, CinemaHall cinemaHall) { // todo default price
+    public Seat createSeat(int row, int seatNumber, CinemaHall cinemaHall) {
         Seat seat = dataManager.create(Seat.class);
         seat.setCinemaHall(cinemaHall);
         seat.setRowNumber(row);

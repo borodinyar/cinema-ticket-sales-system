@@ -1,6 +1,8 @@
 package com.company.tickets.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
@@ -87,5 +89,10 @@ public class Seat {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return this.getCinemaHall().getName() + " (" + this.getRowNumber() + ", " + this.getNumberInRow() + ")\n";
     }
 }

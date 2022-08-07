@@ -1,6 +1,7 @@
 package com.company.tickets.screen.cinemahall;
 
 import com.company.tickets.app.CinemaHallService;
+import com.company.tickets.entity.Seat;
 import com.company.tickets.entity.User;
 import io.jmix.core.EntityStates;
 import io.jmix.core.security.event.SingleUserPasswordChangeEvent;
@@ -11,10 +12,12 @@ import io.jmix.ui.component.TextField;
 import io.jmix.ui.model.DataContext;
 import io.jmix.ui.screen.*;
 import com.company.tickets.entity.CinemaHall;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 
@@ -24,6 +27,7 @@ import java.util.TimeZone;
 public class CinemaHallEdit extends StandardEditor<CinemaHall> {
 
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CinemaHallEdit.class);
     @Autowired
     private EntityStates entityStates;
 
@@ -42,29 +46,14 @@ public class CinemaHallEdit extends StandardEditor<CinemaHall> {
     @Subscribe
     public void onInitEntity(InitEntityEvent<User> event) {
         nameField.setEditable(true);
-
     }
-
-    /*@Subscribe
-    public void onAfterShow(AfterShowEvent event) {
-        if (entityStates.isNew(getEditedEntity())) {
-            nameField.focus();
-        }
-    }*/
 
     @Subscribe
     protected void onBeforeCommit(BeforeCommitChangesEvent event) {
         if (entityStates.isNew(getEditedEntity())) {
-            cinemaHallService.createSeats(getEditedEntity());
+            List<Seat> seats = cinemaHallService.createSeats(getEditedEntity());
+            getEditedEntity().setSeat(seats);
         }
+        log.info(getEditedEntity().toString());
     }
-
-    /*@Subscribe(target = Target.DATA_CONTEXT)
-    public void onPostCommit(DataContext.PostCommitEvent event) {
-        if (isNewEntity) {
-            getApplicationContext().publishEvent(new SingleUserPasswordChangeEvent(getEditedEntity().getUsername(), passwordField.getValue()));
-        }
-    }*/
-
-
 }

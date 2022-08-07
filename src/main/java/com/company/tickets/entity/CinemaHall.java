@@ -5,7 +5,10 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,11 +21,13 @@ public class CinemaHall {
     @Id
     private UUID id;
 
+    @NotBlank(message = "The name must not be empty")
     @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull
     private String name;
 
+    @Lob
     @Column(name = "DESCRIPTION", nullable = false)
     @NotNull
     private String description;
@@ -38,7 +43,7 @@ public class CinemaHall {
     @OneToMany(mappedBy = "cinemaHall")
     private List<Session> session;
 
-    @OneToMany(mappedBy = "cinemaHall")
+    @OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.PERSIST)
     private List<Seat> seat;
 
     public Integer getNumberOfSeats() {

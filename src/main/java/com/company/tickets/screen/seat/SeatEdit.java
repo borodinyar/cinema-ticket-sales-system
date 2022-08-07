@@ -24,16 +24,15 @@ public class SeatEdit extends StandardEditor<Seat> {
     @Autowired
     private EntityPicker<CinemaHall> cinemaHallField;
 
-    @Install(to = "rowNumberField", subject = "validator")
+    /*@Install(to = "rowNumberField", subject = "validator")
     private void rowNumberFieldValidator(Integer value) {
         CinemaHall cinemaHall = dataManager.loadValue("select o from CinemaHall o where o.name = '" + Objects.requireNonNull(cinemaHallField.getValue()).getName() + "'", CinemaHall.class).one();
         Integer row = cinemaHall.getNumberOfRows();
-        log.info(value + row.toString());
+        log.info(value + " " + row.toString());
         if (value <= 0 && value > row) {
             throw new ValidationException("Row number should be between 1 and" + row);
         }
-
-    }
+    }*/
 
     @Subscribe("numberInRowField")
     public void onNumberInRowFieldValueChange(HasValue.ValueChangeEvent<Integer> event) {

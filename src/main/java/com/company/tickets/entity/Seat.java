@@ -5,6 +5,8 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -31,19 +33,20 @@ public class Seat {
     @NotNull
     private Integer numberInRow;
 
+    @PositiveOrZero(message = "The price mustn't be negative")
     @Column(name = "PRICE", nullable = false)
     @NotNull
     private Double price;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "seat")
-    private Tickets ticket;
+    @OneToMany(mappedBy = "seat")
+    private List<Tickets> tickets;
 
-    public Tickets getTicket() {
-        return ticket;
+    public void setTickets(List<Tickets> tickets) {
+        this.tickets = tickets;
     }
 
-    public void setTicket(Tickets ticket) {
-        this.ticket = ticket;
+    public List<Tickets> getTickets() {
+        return tickets;
     }
 
     public Double getPrice() {

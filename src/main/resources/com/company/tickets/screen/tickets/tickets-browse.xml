@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://ticketsBrowse.caption"
+        focusComponent="ticketsesTable">
+    <data readOnly="true">
+        <collection id="ticketsesDc"
+                    class="com.company.tickets.entity.Tickets">
+            <fetchPlan extends="_base">
+                <property name="seat" fetchPlan="_base">
+                    <property name="cinemaHall" fetchPlan="_base"/>
+                </property>
+                <property name="session" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="ticketsesDl">
+                <query>
+                    <![CDATA[select e from Tickets e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="ticketsesTable" spacing="true">
+        <filter id="filter"
+                dataLoader="ticketsesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="ticketsesTable"
+                    width="100%"
+                    dataContainer="ticketsesDc">
+            <actions>
+            </actions>
+            <columns>
+                <column id="price"/>
+                <column id="seat"/>
+                <column id="session"/>
+                <column id="isFree"/>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="tickets">
+        <createTable tableName="CINEMA_HALL">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CINEMA_HALL"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="CLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NUMBER_OF_ROWS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NUMBER_OF_SEATS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="tickets">
+        <createTable tableName="FILM">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_FILM"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DURATION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="tickets">
+        <createTable tableName="SEAT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SEAT"/>
+            </column>
+            <column name="CINEMA_HALL_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ROW_NUMBER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NUMBER_IN_ROW" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRICE" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="tickets">
+        <createTable tableName="SESSION_">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SESSION_"/>
+            </column>
+            <column name="CINEMA_HALL_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FILM_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_TIME" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="END_TIME" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="tickets">
+        <createTable tableName="TICKETS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TICKETS"/>
+            </column>
+            <column name="PRICE" type="DOUBLE"/>
+            <column name="SEAT_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SESSION_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_FREE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="tickets">
+        <createIndex indexName="IDX_SEAT_CINEMA_HALL" tableName="SEAT">
+            <column name="CINEMA_HALL_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CINEMA_HALL_ID" baseTableName="SEAT"
+                                 constraintName="FK_SEAT_ON_CINEMA_HALL" referencedColumnNames="ID"
+                                 referencedTableName="CINEMA_HALL"/>
+    </changeSet>
+    <changeSet id="7" author="tickets">
+        <createIndex indexName="IDX_SESSION__CINEMA_HAL_kDEAAn" tableName="SESSION_">
+            <column name="CINEMA_HALL_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CINEMA_HALL_ID" baseTableName="SESSION_"
+                                 constraintName="FK_SESSION__ON_CINEMA_HALL" referencedColumnNames="ID"
+                                 referencedTableName="CINEMA_HALL"/>
+    </changeSet>
+    <changeSet id="8" author="tickets">
+        <createIndex indexName="IDX_SESSION__FILM" tableName="SESSION_">
+            <column name="FILM_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="FILM_ID" baseTableName="SESSION_" constraintName="FK_SESSION__ON_FILM"
+                                 referencedColumnNames="ID" referencedTableName="FILM"/>
+    </changeSet>
+    <changeSet id="9" author="tickets">
+        <createIndex indexName="IDX_TICKETS_SEAT" tableName="TICKETS">
+            <column name="SEAT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SEAT_ID" baseTableName="TICKETS" constraintName="FK_TICKETS_ON_SEAT"
+                                 referencedColumnNames="ID" referencedTableName="SEAT"/>
+    </changeSet>
+    <changeSet id="10" author="tickets">
+        <createIndex indexName="IDX_TICKETS_SESSION" tableName="TICKETS">
+            <column name="SESSION_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SESSION_ID" baseTableName="TICKETS"
+                                 constraintName="FK_TICKETS_ON_SESSION" referencedColumnNames="ID"
+                                 referencedTableName="SESSION_"/>
+    </changeSet>
+</databaseChangeLog>

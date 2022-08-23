@@ -1,6 +1,5 @@
 package com.company.tickets.entity;
 
-import io.jmix.core.HasTimeZone;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.SystemLevel;
@@ -9,10 +8,12 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.security.authentication.JmixUserDetails;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -20,10 +21,10 @@ import java.util.UUID;
 @Table(name = "USER_", indexes = {
         @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true)
 })
-public class User implements JmixUserDetails, HasTimeZone {
+public class User implements JmixUserDetails {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
 
@@ -52,11 +53,19 @@ public class User implements JmixUserDetails, HasTimeZone {
     @Column(name = "ACTIVE")
     protected Boolean active = true;
 
-    @Column(name = "TIME_ZONE_ID")
-    protected String timeZoneId;
+    @OneToMany(mappedBy = "user")
+    private List<Tickets> tickets;
 
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public void setTickets(List<Tickets> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<Tickets> getTickets() {
+        return tickets;
+    }
 
     public UUID getId() {
         return id;
@@ -160,12 +169,4 @@ public class User implements JmixUserDetails, HasTimeZone {
                 (lastName != null ? lastName : ""), username).trim();
     }
 
-    @Override
-    public String getTimeZoneId() {
-        return timeZoneId;
-    }
-
-    public void setTimeZoneId(String timeZoneId) {
-        this.timeZoneId = timeZoneId;
-    }
 }

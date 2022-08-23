@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://ticketsBrowse.caption"
+        caption="msg://ticketsShow.caption"
         focusComponent="ticketsesTable">
     <data readOnly="true">
         <collection id="ticketsesDc"
                     class="com.company.tickets.entity.Tickets">
             <fetchPlan extends="_base">
-                <property name="seat" fetchPlan="_base">
-                    <property name="cinemaHall" fetchPlan="_base"/>
+                <property name="seat" fetchPlan="_instance_name">
+<!--                    <property name="rowNumber"/>-->
+<!--                    <property name="numberInRow"/>-->
                 </property>
-                <property name="session" fetchPlan="_base"/>
+                <property name="session" fetchPlan="_base">
+                    <property name="cinemaHall" fetchPlan="_instance_name"/>
+<!--                    <property name="film" fetchPlan="_instance_name"/>-->
+                </property>
             </fetchPlan>
             <loader id="ticketsesDl">
                 <query>
-                    <![CDATA[select e from Tickets e]]>
+                    <![CDATA[select e from Tickets e WHERE e.isFree = TRUE]]>
                 </query>
             </loader>
         </collection>
@@ -44,6 +48,8 @@
                     width="100%"
                     dataContainer="ticketsesDc">
             <actions>
+                <action id="change" />
+                <action id="buy" />
             </actions>
             <columns>
                 <group>
@@ -52,12 +58,14 @@
                 <column id="seat.cinemaHall"/>
                 <column id="price"/>
                 <column id="seat"/>
-
+<!--                <column id="session"/>-->
                 <column id="isFree"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+                <button id="buyBtn" action="ticketsesTable.buy" caption="msg://buyBtn.caption"/>
+                <button id="editBtn" action="ticketsesTable.change"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

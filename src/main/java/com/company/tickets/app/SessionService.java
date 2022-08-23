@@ -28,9 +28,9 @@ public class SessionService {
     }
 
     private List<Seat> getSeatsList(Session session) {
-         return dataManager.load(Seat.class)
-                .query("SELECT e FROM Seat e WHERE e.cinemaHall.name = '"
-                        + session.getCinemaHall().getName() + "'")
+        return dataManager.load(Seat.class)
+                .query("SELECT e FROM Seat e WHERE e.cinemaHall.name = :cinemaHallName")
+                .parameter("cinemaHallName", session.getCinemaHall().getName())
                 .list();
     }
 

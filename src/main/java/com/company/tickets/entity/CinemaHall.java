@@ -101,7 +101,7 @@ public class CinemaHall {
         this.id = id;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Name hall: " + this.getName() + "\n");
@@ -114,5 +114,5 @@ public class CinemaHall {
             stringBuilder.append(seat.toString() + "\n");
         }
         return stringBuilder.toString();
-    }
+    }*/
 }

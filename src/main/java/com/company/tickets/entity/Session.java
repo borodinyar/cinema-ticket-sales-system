@@ -7,6 +7,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +96,14 @@ public class Session {
         this.id = id;
     }
 
-    @Override
+    @InstanceName
+    @DependsOnProperties({"startTime", "endTime", "film"})
+    public String getInstanceName() {
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        return String.format("%s (%s-%s)", film.getName(), format.format(startTime), format.format(endTime));
+    }
+
+    /*@Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Name hall: " + this.getCinemaHall().getName() + "\n");
@@ -108,11 +116,5 @@ public class Session {
             stringBuilder.append(ticket.toString() + "\n");
         }
         return stringBuilder.toString();
-    }
-/*
-    @InstanceName
-    @DependsOnProperties({"cinemaHall", "startTime", "endTime", "film"})
-    public String getInstanceName() {
-        return String.format("%s %s %s %s", cinemaHall, startTime, endTime, film);
     }*/
 }

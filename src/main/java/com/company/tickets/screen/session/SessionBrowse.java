@@ -7,4 +7,5 @@ import com.company.tickets.entity.Session;
 @UiDescriptor("session-browse.xml")
 @LookupComponent("sessionsTable")
 public class SessionBrowse extends StandardLookup<Session> {
+
 }

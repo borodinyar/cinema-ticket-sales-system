@@ -1,6 +1,7 @@
 package com.company.tickets.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
@@ -18,7 +19,6 @@ public class Film {
     @Id
     private UUID id;
 
-    @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull
     private String name;
@@ -74,8 +74,14 @@ public class Film {
         this.id = id;
     }
 
-    @Override
+    @InstanceName
+    @DependsOnProperties({"name"})
+    public String getInstanceName() {
+        return String.format("%s", name);
+    }
+
+    /*@Override
     public String toString() {
         return this.getName() + " " + this.getDescription() + " (" + this.getDuration() + ")";
-    }
+    }*/
 }

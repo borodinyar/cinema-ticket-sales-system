@@ -1,6 +1,8 @@
 package com.company.tickets.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
@@ -89,8 +91,14 @@ public class Seat {
         this.id = id;
     }
 
-    @Override
+    @InstanceName
+    @DependsOnProperties({"numberInRow", "rowNumber"})
+    public String getInstanceName() {
+        return String.format("Ряд:%s, место:%s", numberInRow, rowNumber);
+    }
+
+    /*@Override
     public String toString() {
         return this.getCinemaHall().getName() + " (" + this.getRowNumber() + ", " + this.getNumberInRow() + ")";
-    }
+    }*/
 }

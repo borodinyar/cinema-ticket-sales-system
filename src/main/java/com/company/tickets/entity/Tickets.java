@@ -10,7 +10,8 @@ import java.util.UUID;
 @JmixEntity
 @Table(name = "TICKETS", indexes = {
         @Index(name = "IDX_TICKETS_SEAT", columnList = "SEAT_ID"),
-        @Index(name = "IDX_TICKETS_SESSION", columnList = "SESSION_ID")
+        @Index(name = "IDX_TICKETS_SESSION", columnList = "SESSION_ID"),
+        @Index(name = "IDX_TICKETS_USER", columnList = "USER_ID")
 })
 @Entity
 public class Tickets {
@@ -35,6 +36,19 @@ public class Tickets {
     @Column(name = "IS_FREE", nullable = false)
     @NotNull
     private Boolean isFree = false;
+
+    @JoinColumn(name = "USER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     public Boolean getIsFree() {
         return isFree;
@@ -78,6 +92,6 @@ public class Tickets {
 
     @Override
     public String toString() {
-        return this.getSeat().toString() + " " + this.getPrice() + " " + (this.isFree ? "free" : "sold");
+        return this.getSeat().getInstanceName() + " " + this.getPrice() + " " + (this.isFree ? "free" : "sold") + " " + this.getUser().username;
     }
 }

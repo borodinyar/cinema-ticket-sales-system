@@ -26,5 +26,6 @@ public class SeatBrowse extends StandardLookup<Seat> {
     @Subscribe("seatsTable.remove")
     public void onSeatsTableRemove(Action.ActionPerformedEvent event) {
         log.info(seatsTable.getSingleSelected().toString());
+
     }
 }

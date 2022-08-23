@@ -7,6 +7,7 @@
                   class="com.company.tickets.entity.User">
             <fetchPlan extends="_base"/>
             <loader/>
+            <collection id="ticketsDc" property="tickets"/>
         </instance>
     </data>
     <actions>
@@ -39,8 +40,16 @@
                 <textField id="firstNameField" property="firstName"/>
                 <textField id="lastNameField" property="lastName"/>
                 <textField id="emailField" property="email"/>
-                <comboBox id="timeZoneField" property="timeZoneId"/>
                 <checkBox id="activeField" property="active"/>
+                <groupTable id="ticketsTable" height="100%" width="100%" dataContainer="ticketsDc">
+                    <columns>
+                        <column id="price"/>
+                        <column id="seat"/>
+                        <column id="session"/>
+                        <column id="isFree"/>
+
+                    </columns>
+                </groupTable>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

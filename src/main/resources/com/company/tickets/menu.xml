@@ -10,7 +10,6 @@
         <item screen="CinemaHall.browse" caption="msg://com.company.tickets.screen.cinemahall/cinemaHallBrowse.menu"/>
         <item screen="Tickets.browse" caption="msg://com.company.tickets.screen.tickets/ticketsBrowse.menu"/>
         <item screen="Tickets.show" caption="msg://com.company.tickets.screen.tickets/ticketsShow.menu"/>
-        <item screen="User.myTickets" caption="msg://com.company.tickets.screen.user/myTickets.menu"/>
     </menu>
 
 </menu-config>

@@ -2,9 +2,9 @@
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         caption="msg://ticketsBrowse.caption"
-        focusComponent="ticketsesTable">
+        focusComponent="ticketsTable">
     <data readOnly="true">
-        <collection id="ticketsesDc"
+        <collection id="ticketsDc"
                     class="com.company.tickets.entity.Tickets">
             <fetchPlan extends="_base">
                 <property name="seat" fetchPlan="_base">
@@ -12,9 +12,9 @@
                 </property>
                 <property name="session" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="ticketsesDl">
+            <loader id="ticketsDl">
                 <query>
-                    <![CDATA[select e from Tickets e]]>
+                    <![CDATA[select e from Tickets e WHERE e.user = :currentUser]]>
                 </query>
             </loader>
         </collection>
@@ -35,15 +35,16 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="ticketsesTable" spacing="true">
+    <layout expand="ticketsTable" spacing="true">
         <filter id="filter"
-                dataLoader="ticketsesDl">
+                dataLoader="ticketsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="ticketsesTable"
+        <groupTable id="ticketsTable"
                     width="100%"
-                    dataContainer="ticketsesDc">
+                    dataContainer="ticketsDc">
             <actions>
+                <action id="remove" />
             </actions>
             <columns>
                 <group>
@@ -52,12 +53,11 @@
                 <column id="seat.cinemaHall"/>
                 <column id="price"/>
                 <column id="seat"/>
-
-                <column id="isFree"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+                <button id="remove" action="ticketsTable.remove" caption="msg://remove.caption"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

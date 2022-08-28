@@ -25,20 +25,11 @@ import java.util.TimeZone;
 @UiDescriptor("cinema-hall-edit.xml")
 @EditedEntityContainer("cinemaHallDc")
 public class CinemaHallEdit extends StandardEditor<CinemaHall> {
-
-
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CinemaHallEdit.class);
     @Autowired
     private EntityStates entityStates;
 
     @Autowired
     private TextField<String> nameField;
-
-    @Autowired
-    private Notifications notifications;
-
-    @Autowired
-    private MessageBundle messageBundle;
 
     @Autowired
     private CinemaHallService cinemaHallService;
@@ -54,6 +45,5 @@ public class CinemaHallEdit extends StandardEditor<CinemaHall> {
             List<Seat> seats = cinemaHallService.createSeats(getEditedEntity());
             getEditedEntity().setSeat(seats);
         }
-        log.info(getEditedEntity().toString());
     }
 }

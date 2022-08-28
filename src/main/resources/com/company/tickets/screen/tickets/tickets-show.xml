@@ -16,7 +16,7 @@
 <!--                    <property name="film" fetchPlan="_instance_name"/>-->
                 </property>
             </fetchPlan>
-            <loader id="ticketsesDl">
+            <loader id="ticketsDl">
                 <query>
                     <![CDATA[select e from Tickets e WHERE e.isFree = TRUE]]>
                 </query>
@@ -41,7 +41,7 @@
                 width="800"/>
     <layout expand="ticketsesTable" spacing="true">
         <filter id="filter"
-                dataLoader="ticketsesDl">
+                dataLoader="ticketsDl">
             <properties include=".*"/>
         </filter>
         <groupTable id="ticketsesTable"

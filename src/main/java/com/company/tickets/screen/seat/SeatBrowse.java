@@ -15,17 +15,4 @@ import javax.inject.Named;
 @UiDescriptor("seat-browse.xml")
 @LookupComponent("seatsTable")
 public class SeatBrowse extends StandardLookup<Seat> {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(SeatBrowse.class);
-    @Autowired
-    private CollectionLoader<Seat> seatsDl;
-    @Autowired
-    private GroupTable<Seat> seatsTable;
-    @Named("seatsTable.remove")
-    private RemoveAction<Seat> seatsTableRemove;
-
-    @Subscribe("seatsTable.remove")
-    public void onSeatsTableRemove(Action.ActionPerformedEvent event) {
-        log.info(seatsTable.getSingleSelected().toString());
-
-    }
 }

@@ -1,6 +1,5 @@
 package com.company.tickets.app;
 
-import com.company.tickets.entity.CinemaHall;
 import com.company.tickets.entity.Seat;
 import com.company.tickets.entity.Session;
 import com.company.tickets.entity.Tickets;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 public class SessionService {
@@ -40,12 +38,34 @@ public class SessionService {
                 .collect(Collectors.toList());
     }
 
-    public Tickets createTicket(Seat seat, Session session) {
+    private Tickets createTicket(Seat seat, Session session) {
         Tickets ticket = dataManager.create(Tickets.class);
         ticket.setPrice(seat.getPrice() + 10);
         ticket.setSeat(seat);
         ticket.setSession(session);
         ticket.setIsFree(true);
         return ticket;
+    }
+
+    public boolean canRemove(final Session session) {
+        List<Tickets> tickets = session.getTickets();
+        for (Tickets ticket : tickets) {
+            if (ticketIsNotFree(ticket)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void removeSession(Session session) {
+        List<Tickets> tickets = session.getTickets();
+        for (Tickets ticket : tickets) {
+            dataManager.remove(ticket);
+        }
+        dataManager.remove(session);
+    }
+
+    private boolean ticketIsNotFree(Tickets ticket) {
+        return !ticket.getIsFree();
     }
 }
